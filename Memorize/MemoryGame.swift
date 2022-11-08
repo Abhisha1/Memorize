@@ -38,6 +38,17 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
     
+    mutating func shuffle(){
+        cards.shuffle()
+    }
+    
+    mutating func restart(){
+        cards.indices.forEach{
+            cards[$0].isMatched =  false
+            cards[$0].isFaceUp = false
+        }
+    }
+    
     init(numberOfPairsOfCards: Int, createCardContent: (Int)-> CardContent){
         cards = Array<Card>()
         
@@ -46,6 +57,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             cards.append(Card(id: pairIndex*2, content: cardContent))
             cards.append(Card(id: pairIndex*2+1, content: cardContent))
         }
+        cards.shuffle()
     }
     
     struct Card: Identifiable {
